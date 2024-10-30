@@ -1,8 +1,6 @@
 import tkinter as tk
 
-
 class TicTacToeView:
-
     def __init__(self, title):
         self.root = tk.Tk()
         self.root.title(title)
@@ -34,11 +32,20 @@ class TicTacToeView:
                 self.buttons[r][c].config(command=lambda r=r, c=c: controller.handle_click(r, c))
         self.controller = controller  # Save the controller reference for resetting
 
+    def display_move(self, r, c, player):
+        """Displays the player's move on the game board."""
+        self.buttons[r][c].config(text=player, state="disabled")
+
+    def display_message(self, message):
+        """Displays a message about the game status or result."""
+        self.message_label.config(text=message)
+
     def update_turn_label(self, turn):
+        """Updates the label to show the current player's turn."""
         self.turn_label.config(text="Turn: {}".format(turn))
 
     def reset_board(self):
-        # Clear each button on the board
+        """Resets the game board and updates the controller to restart the game."""
         for r in range(3):
             for c in range(3):
                 self.buttons[r][c].config(text="", state="normal")
