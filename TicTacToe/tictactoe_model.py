@@ -13,6 +13,7 @@ class TicTacToeModel:
         if self.is_game_over():
             # raise an exception if the game is over
             raise Exception("Game is over!")
+            # raise an exception if the position is occupied
         if self.board[r][c] is not None:
             raise Exception("Position occupied")
         
@@ -26,7 +27,6 @@ class TicTacToeModel:
         return self.is_full() or self.check_winner() is not None
 
     def check_winner(self):
-        # Check rows, columns, and diagonals
         for i in range(3):
             if self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0] is not None:
                 return self.board[i][0]
