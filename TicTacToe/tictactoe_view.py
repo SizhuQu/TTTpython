@@ -6,13 +6,21 @@ class TicTacToeView:
     def __init__(self, title):
         self.root = tk.Tk()
         self.root.title(title)
+
         self.turn_label = tk.Label(self.root, text="Turn: X", font=("Arial", 18))
         self.turn_label.pack()
+
         self.grid_frame = tk.Frame(self.root)
         self.grid_frame.pack()
+
         self.message_label = tk.Label(self.root, text="", font=("Arial", 18))
         self.message_label.pack()
 
+        # Create restart button
+        self.restart_button = tk.Button(self.root, text="Restart", font=("Arial", 14), command=self.reset_board)
+        self.restart_button.pack()
+
+        # Create 3x3 grid of buttons
         self.buttons = [[None for _ in range(3)] for _ in range(3)]
         for r in range(3):
             for c in range(3):
@@ -24,15 +32,19 @@ class TicTacToeView:
         for r in range(3):
             for c in range(3):
                 self.buttons[r][c].config(command=lambda r=r, c=c: controller.handle_click(r, c))
-
-    def display_move(self, r, c, player):
-        self.buttons[r][c].config(text=player, state="disabled")
+        self.controller = controller  # Save the controller reference for resetting
 
     def update_turn_label(self, turn):
         self.turn_label.config(text="Turn: {}".format(turn))
 
-    def display_message(self, message):
-        self.message_label.config(text=message)
+    def reset_board(self):
+        # Clear each button on the board
+        for r in range(3):
+            for c in range(3):
+                self.buttons[r][c].config(text="", state="normal")
+        self.message_label.config(text="")
+        self.turn_label.config(text="Turn: X")
+        self.controller.restart_game()
 
     def display(self):
         self.root.mainloop()
