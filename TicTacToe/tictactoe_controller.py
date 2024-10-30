@@ -25,3 +25,9 @@ class TicTacToeController:
                 self.view.display_message("")
         except Exception as e:
             self.view.display_message(str(e))
+
+    def restart_game(self):
+        # Reset model and current player
+        self.model.__init__()
+        self.current_player = self.model.get_turn()
+        self.view.update_turn_label(self.current_player)
